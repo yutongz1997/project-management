@@ -1,7 +1,16 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+const methodOverride = require('method-override');
+
+const userRoutes = require('./routes/users');
+const projectRoutes = require('./routes/projects');
+
 
 const app = express();
 const port = 3001;
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
@@ -9,10 +18,11 @@ app.use((req, res, next) => {
     next();
 });
 
-app.get('/api/hello', (req, res) => {
-    res.send('Hello from the backend!');
-});
+app.use('/api/users', userRoutes);
+app.use('/api/projects', projectRoutes);
+
 
 app.listen(port, () => {
-    console.log(`Listening to the port ${port}...`);
+    console.log(`Server is running on the port ${port}...`);
 });
+

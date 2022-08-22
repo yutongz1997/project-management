@@ -1,17 +1,26 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import NavigationBar from "./components/NavigationBar";
 
 import './App.css';
 
 
 function App() {
-    const [message, setMessage] = useState('');
-    fetch('/api/hello')
-        .then(response => response.text())
-        .then(data => setMessage(data));
+    const [userData, setUserData] = useState({});
+
+    useEffect(() => {
+        (async () => {
+            await fetch('/api/users/1?name=Todd')
+                .then(res => res.json())
+                .then(data => setUserData(data))
+                .catch(err => console.log(err));
+        })();
+    }, []);
+
     return (
         <div>
+            <NavigationBar />
             <h1>Hello React app!</h1>
-            <p>From the backend: {message}</p>
+            <p>#1 User - Name: {userData.name}, Email: {userData.email}, Date of Birth: {userData.birth}</p>
         </div>
     );
 }
