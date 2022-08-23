@@ -1,9 +1,9 @@
-const express = require('express');
-const moment = require('moment');
-const connection = require('../database');
+import express from 'express';
+import moment from 'moment';
+import connection from '../database.js';
+
 
 const router = express.Router();
-
 
 router.get('/', (req, res) => {
     res.send('GET request for all users');
@@ -54,4 +54,5 @@ router.delete('/:userId', (req, res) => {
    res.send(`DELETE request for user ${userId}`);
 });
 
-module.exports = router;
+
+export default router;

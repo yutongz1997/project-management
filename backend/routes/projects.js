@@ -1,7 +1,7 @@
-const express = require('express');
+import express from 'express';
+
 
 const router = express.Router();
-
 
 router.get('/', (req, res) => {
     res.send('GET request for all projects');
@@ -27,4 +27,5 @@ router.delete('/:projectId', (req, res) => {
     res.send(`DELETE request for project ${projectId}`);
 });
 
-module.exports = router;
+
+export default router;

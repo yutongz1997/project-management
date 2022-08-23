@@ -1,9 +1,9 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const methodOverride = require('method-override');
+import express from 'express';
+import bodyParser from 'body-parser';
+import methodOverride from 'method-override';
 
-const userRoutes = require('./routes/users');
-const projectRoutes = require('./routes/projects');
+import usersRouter from './routes/users.js';
+import projectsRouter from './routes/projects.js';
 
 
 const app = express();
@@ -18,11 +18,13 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use('/api/users', userRoutes);
-app.use('/api/projects', projectRoutes);
+app.use('/api/users', usersRouter);
+app.use('/api/projects', projectsRouter);
 
 
 app.listen(port, () => {
     console.log(`Server is running on the port ${port}...`);
 });
 
+
+export default app;
