@@ -15,14 +15,14 @@ function NavigationBar() {
         <Navbar expand="lg" bg={theme} variant={theme} sticky="top">
             <Container>
                 <Navbar.Brand href="/">
-                    <img src={logo} width="48" height="48" alt="User and Project Management" />
+                    <img src={logo} width="48" height="48" alt="Project Management" />
                     User and Project Management
                 </Navbar.Brand>
                 <Navbar.Toggle />
                 <Navbar.Collapse>
                     <Nav className="me-auto my-2 my-lg-0">
-                        <Nav.Link href="/">Home</Nav.Link>
-                        <Nav.Link href="/api/hello">Hello from API!</Nav.Link>
+                        <Nav.Link href="/participants">Participants</Nav.Link>
+                        <Nav.Link href="/projects">Projects</Nav.Link>
                     </Nav>
                     <Form className="d-flex">
                         <Form.Switch label="Dark Mode"

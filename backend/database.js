@@ -1,14 +1,7 @@
-import mysql from 'mysql';
-import databaseConfig from './config.js';
+import mysql from 'mysql2';
+import poolConfig from './config.js';
 
 
-const connection = mysql.createConnection(databaseConfig);
-connection.connect(err => {
-    if (err) {
-        throw err;
-    }
-    console.log('Successfully connected to the database');
-});
+const pool = mysql.createPool(poolConfig).promise();
 
-
-export default connection;
+export default pool;

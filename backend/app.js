@@ -1,15 +1,16 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import methodOverride from 'method-override';
 
-import usersRouter from './routes/users.js';
-import projectsRouter from './routes/projects.js';
+import participantsRouter from './routes/participant.routes.js';
+import projectsRouter from './routes/projects.routes.js';
 
 
 const app = express();
 const port = 3001;
 
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 app.use(bodyParser.json());
 
 app.use((req, res, next) => {
@@ -18,9 +19,8 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use('/api/users', usersRouter);
+app.use('/api/participants', participantsRouter);
 app.use('/api/projects', projectsRouter);
-
 
 app.listen(port, () => {
     console.log(`Server is running on the port ${port}...`);
