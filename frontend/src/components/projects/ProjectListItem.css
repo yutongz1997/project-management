@@ -1,0 +1,20 @@
+.project-item {
+    margin-bottom: -1px;
+}
+
+.icon-edit-project {
+    color: #555;
+}
+
+.icon-delete-project {
+    color: #ff0000;
+}
+
+.icon-edit-project:hover {
+    color: #282c34;
+}
+
+.icon-delete-project:hover {
+
+    color: #dc3545;
+}

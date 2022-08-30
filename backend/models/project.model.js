@@ -9,8 +9,8 @@ export default class Project {
         this.title = project.title;
         this.participants = project.participants;
         this.description = project.description;
-        this.notes = project.notes;
         this.year = project.year;
+        this.notes = project.notes;
         this.lastUpdateTime = DateTime.utc()
             .toFormat('yyyy-MM-dd HH:mm:ss')
     }
@@ -23,12 +23,12 @@ export default class Project {
             await connection.beginTransaction();
 
             const sqlProject = 'INSERT INTO `projects` \
-                                (`id`, `title`, `description`, `notes`, `year`, \
+                                (`id`, `title`, `description`, `year`, `notes`, \
                                  `lastUpdateTime`) \
                                 VALUES (?, ?, ?, ?, ?, ?)';
             let [result, ] = await connection.execute(sqlProject,
-                [this.id, this.title, this.description, this.notes,
-                this.year, this.lastUpdateTime]);
+                [this.id, this.title, this.description, this.year,
+                    this.notes, this.lastUpdateTime]);
             const affectedRowsProject = result.affectedRows;
 
             let affectedRowsLinks = 0;
@@ -43,7 +43,7 @@ export default class Project {
 
             await connection.commit();
             await connection.release();
-            return new Promise(function (resolve, _) {
+            return new Promise((resolve, _) => {
                 resolve({
                     affectedRows: affectedRowsProject + affectedRowsLinks,
                     id: this.id
@@ -54,7 +54,7 @@ export default class Project {
                 await connection.rollback();
                 await connection.release();
             }
-            return new Promise(function (_, reject) {
+            return new Promise((_, reject) => {
                 reject(error);
             });
         }
@@ -73,7 +73,7 @@ export default class Project {
             if (results.length === 0) {
                 await connection.rollback();
                 await connection.release();
-                return new Promise(function (_, reject) {
+                return new Promise((_, reject) => {
                     reject(new Error(`No project found in the database with ID ${id}`));
                 });
             }
@@ -88,11 +88,11 @@ export default class Project {
             if (results.length === 0) {
                 await connection.rollback();
                 await connection.release();
-                return new Promise(function (_, reject) {
+                return new Promise((_, reject) => {
                     reject(new Error(`No participant found for the project with ID ${id}`));
                 });
             }
-            return new Promise(function (resolve, _) {
+            return new Promise((resolve, _) => {
                 const data = {
                     ...projectData,
                     participants: results
@@ -103,7 +103,7 @@ export default class Project {
                 });
             });
         } catch (error) {
-            return new Promise(function (_, reject) {
+            return new Promise((_, reject) => {
                 reject(error);
             });
         }
@@ -111,17 +111,53 @@ export default class Project {
 
 
     static async findAll() {
-        const sql = 'SELECT * FROM `projects`';
+        let connection;
         try {
-            const [results, ] = await pool.execute(sql);
-            return new Promise(function (resolve, _) {
+            connection = await pool.getConnection();
+            await connection.beginTransaction();
+
+            const sqlProject = 'SELECT * FROM `projects`';
+            let [results, ] = await connection.execute(sqlProject);
+
+            const projects = results;
+            if (projects.length > 0) {
+                const sqlParticipants = 'SELECT lpp.`id_project` AS `idProject`, p.`id` AS `idParticipant`, \
+                                            p.`firstName`, p.`lastName` \
+                                         FROM `lookup_project_participants` lpp \
+                                         INNER JOIN `participants` p \
+                                            ON lpp.`id_participant` = p.`id`';
+                [results, ] = await connection.execute(sqlParticipants);
+                if (results.length === 0) {
+                    return new Promise((_, reject) => {
+                        reject(new Error('No participant found when some project exists'));
+                    });
+                }
+
+                for (const result of results) {
+                    const project = projects.find(project => project.id === result.idProject);
+                    if (!project.participants) {
+                        project.participants = [];
+                    }
+                    project.participants.push({
+                        id: result.idParticipant,
+                        firstName: result.firstName,
+                        lastName: result.lastName
+                    });
+                }
+            }
+
+            return new Promise((resolve, _) => {
                 resolve({
-                    length: results.length,
-                    data: results
+                    length: projects.length,
+                    data: projects
                 });
             });
         } catch (error) {
-            return new Promise(function (_, reject) {
+            if (connection) {
+                await connection.rollback();
+                await connection.release();
+            }
+            return new Promise((_, reject) => {
                 reject(error);
             });
         }
@@ -140,23 +176,24 @@ export default class Project {
                 ...searchResult.data[0],
                 ...fields,
                 participants: newParticipants,
-                lastUpdateTime: DateTime.utc().toISO()
+                lastUpdateTime: DateTime.utc()
+                    .toFormat('yyyy-MM-dd HH:mm:ss')
             };
 
             connection = await pool.getConnection();
             await connection.beginTransaction();
 
             const sqlProject = 'UPDATE `projects` \
-                                SET `title` = ?, `description` = ?, `notes` = ?, \
-                                    `year` = ? \
+                                SET `title` = ?, `description` = ?, `year` = ?, \
+                                    `notes` = ?, `lastUpdateTime` = ? \
                                 WHERE `id` = ?';
             let [result, ] = await connection.execute(sqlProject,
-                [project.title, project.description, project.notes,
-                    project.year, id]);
+                [project.title, project.description, project.year,
+                    project.notes, project.lastUpdateTime, id]);
             if (result.affectedRows === 0) {
                 await connection.rollback();
                 await connection.release();
-                return new Promise(function (_, reject) {
+                return new Promise((_, reject) => {
                     reject(new Error(`Failed to update the project with ID ${id}`));
                 });
             }
@@ -175,7 +212,7 @@ export default class Project {
                     if (result.affectedRows === 0) {
                         await connection.rollback();
                         await connection.release();
-                        return new Promise(function (_, reject) {
+                        return new Promise((_, reject) => {
                             reject(new Error('Failed to delete previous participant(s) ' +
                                 `of the project with ID ${id}`));
                         });
@@ -199,7 +236,7 @@ export default class Project {
 
             await connection.commit();
             await connection.release();
-            return new Promise(function (resolve, _) {
+            return new Promise((resolve, _) => {
                 resolve({
                     affectedRows: affectedRowsProject + affectedRowsLinks
                 });
@@ -209,7 +246,7 @@ export default class Project {
                 await connection.rollback();
                 await connection.release();
             }
-            return new Promise(function (_, reject) {
+            return new Promise((_, reject) => {
                 reject(error);
             });
         }
@@ -226,7 +263,7 @@ export default class Project {
                               WHERE id_project = ?';
             let [result, ] = await connection.execute(sqlLinks, [id]);
             if (result.affectedRows === 0) {
-                return new Promise(function (_, reject) {
+                return new Promise((_, reject) => {
                     reject(new Error(`Failed to delete the project with ID ${id}`));
                 });
             }
@@ -239,7 +276,7 @@ export default class Project {
 
             await connection.commit();
             await connection.release();
-            return new Promise(function (resolve, _) {
+            return new Promise((resolve, _) => {
                 resolve({
                     affectedRows: affectedRowsProject + affectedRowsLinks
                 });
@@ -249,7 +286,7 @@ export default class Project {
                 await connection.rollback();
                 await connection.release();
             }
-            return new Promise(function (_, reject) {
+            return new Promise((_, reject) => {
                 reject(error);
             });
         }

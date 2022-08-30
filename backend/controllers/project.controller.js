@@ -7,15 +7,15 @@ export default class ProjectController {
             title: req.body.title,
             participants: req.body.participants,
             description: req.body.description || '',
-            notes: req.body.notes || '',
-            year: req.body.year
+            year: req.body.year,
+            notes: req.body.notes || ''
         });
         project.create()
             .then(function (result) {
                 res.send({
                     message: 'Created 1 project in the database ' +
                              `with ${result.affectedRows} rows affected`,
-                    data: result.id
+                    id: result.id
                 });
             })
             .catch(function (error) {
@@ -69,11 +69,11 @@ export default class ProjectController {
         if (req.body.description) {
             fields.description = req.body.description;
         }
-        if (req.body.notes) {
-            fields.notes = req.body.notes;
-        }
         if (req.body.year) {
             fields.year = req.body.year;
+        }
+        if (req.body.notes) {
+            fields.notes = req.body.notes;
         }
 
         Project.updateById(req.params.id, fields)

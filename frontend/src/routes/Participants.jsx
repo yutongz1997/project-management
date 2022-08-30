@@ -1,11 +1,8 @@
 import React from 'react';
 
 
-function Participants() {
+export default function Participants() {
     return (
-        <div>Hello</div>
+       <div>Participants</div>
     );
-}
-
-
-export default Participants;
+};

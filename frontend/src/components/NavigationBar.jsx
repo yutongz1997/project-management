@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
+import LinkContainer from 'react-router-bootstrap/LinkContainer';
 
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
@@ -6,33 +7,34 @@ import Navbar from 'react-bootstrap/Navbar';
 import Form from 'react-bootstrap/Form';
 
 import logo from '../logo.svg';
+import Button from 'react-bootstrap/Button';
 
 
-function NavigationBar() {
-    const [darkModeState, setDarkModeState] = useState(false);
-    const theme = darkModeState ? "dark" : "light";
+export default function NavigationBar() {
     return (
-        <Navbar expand="lg" bg={theme} variant={theme} sticky="top">
+        <Navbar expand="lg" bg="light" variant="light" sticky="top">
             <Container>
-                <Navbar.Brand href="/">
-                    <img src={logo} width="48" height="48" alt="Project Management" />
-                    User and Project Management
-                </Navbar.Brand>
+                <LinkContainer to="/">
+                    <Navbar.Brand>
+                        <img src={logo} width="48" height="48" alt="Project Management" />
+                        Project Management
+                    </Navbar.Brand>
+                </LinkContainer>
                 <Navbar.Toggle />
                 <Navbar.Collapse>
                     <Nav className="me-auto my-2 my-lg-0">
-                        <Nav.Link href="/participants">Participants</Nav.Link>
-                        <Nav.Link href="/projects">Projects</Nav.Link>
+                        <LinkContainer to="/participants">
+                            <Nav.Link>Participants</Nav.Link>
+                        </LinkContainer>
+                        <LinkContainer to="/projects">
+                            <Nav.Link>Projects</Nav.Link>
+                        </LinkContainer>
                     </Nav>
                     <Form className="d-flex">
-                        <Form.Switch label="Dark Mode"
-                                     onChange={() => setDarkModeState(!darkModeState)}
-                                     checked={darkModeState} />
+                        <Button>Logout</Button>
                     </Form>
                 </Navbar.Collapse>
             </Container>
         </Navbar>
     );
-}
-
-export default NavigationBar;
+};

@@ -18,8 +18,8 @@ CREATE TABLE projects (
     id             CHAR(36) NOT NULL,
     title          VARCHAR(1000) NOT NULL,
     description    LONGTEXT,
-    notes          LONGTEXT,
     year           YEAR NOT NULL,
+    notes          LONGTEXT,
     lastUpdateTime DATETIME NOT NULL,
 
     PRIMARY KEY (id)

@@ -4,6 +4,8 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
 
 import App from './App';
+import Participants from './routes/Participants';
+import Projects from './routes/Projects';
 
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -14,7 +16,10 @@ root.render(
     <React.StrictMode>
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<App />} />
+                <Route path="/" element={<App />}>
+                    <Route path="participants" element={<Participants />} />
+                    <Route path="projects" element={<Projects />} />
+                </Route>
             </Routes>
         </BrowserRouter>
     </React.StrictMode>
