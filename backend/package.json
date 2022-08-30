@@ -1,5 +1,5 @@
 {
-  "name": "user-project-admin-backend",
+  "name": "project-management-backend",
   "version": "0.1.0",
   "type": "module",
   "main": "app.js",

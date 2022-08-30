@@ -1,7 +1,7 @@
 {
-  "name": "user-project-admin",
+  "name": "project-management",
   "version": "0.1.0",
-  "description": "A tiny user and project management system with a React frontend and an Express backend.",
+  "description": "A tiny project management system with a React frontend and an Express backend.",
   "main": "index.js",
   "scripts": {
     "dev": "concurrently \"cd backend && npm run dev\" \"cd frontend && npm start\"",
