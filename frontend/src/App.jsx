@@ -8,8 +8,6 @@ import Col from 'react-bootstrap/Col';
 
 import NavigationBar from './components/NavigationBar';
 
-import './App.css';
-
 
 function App() {
     return (

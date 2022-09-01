@@ -1,36 +1,25 @@
+import axios from 'axios';
+
+
 export async function getProjects() {
-    const response = await fetch('/api/projects');
-    return response.json();
+    const response = await axios.get('/api/projects');
+    return response.data;
 }
 
 
 export async function createProject(data) {
-    const response = await fetch('/api/projects', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    });
-    return response.json();
+    const response = await axios.post('/api/projects', data);
+    return response.data;
 }
 
 
 export async function updateProject(id, data) {
-    const response = await fetch(`/api/projects/${id}`, {
-        method: 'PATCH',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    });
-    return response.json();
+    const response = await axios.patch(`/api/projects/${id}`, data)
+    return response.data;
 }
 
 
 export async function deleteProject(id) {
-    const response = await fetch(`/api/projects/${id}`, {
-        method: 'DELETE'
-    });
-    return response.json();
+    const response = await axios.delete(`/api/projects/${id}`);
+    return response.data;
 }

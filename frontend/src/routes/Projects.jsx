@@ -46,7 +46,7 @@ export default function Projects() {
                 return titleCompareFn(project1, project2, 'asc');
             });
             setAllProjects(projects);
-            setFilteredProjects(projects);
+            setFilteredProjects([...projects]);
             const jsonParticipants = await getParticipants();
             setAllParticipants(jsonParticipants.data);
         };

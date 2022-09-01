@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import { DateTime } from 'luxon';
+
 import pool from '../database.js';
 
 
@@ -32,14 +33,14 @@ export default class Participant {
                 [this.id, this.firstName, this.lastName, this.dateOfBirth,
                     this.email, this.position, this.description, this.notes,
                     this.joinDate, this.lastUpdateTime]);
-            return new Promise(function (resolve, _) {
+            return new Promise((resolve, _) => {
                 resolve({
                     affectedRows: result.affectedRows,
                     id: this.id
                 });
             });
         } catch (error) {
-            return new Promise(function (_, reject) {
+            return new Promise((_, reject) => {
                 reject(error);
             });
         }
@@ -52,11 +53,11 @@ export default class Participant {
         try {
             const [results, ] = await pool.execute(sql, [id]);
             if (results.length === 0) {
-                return new Promise(function (_, reject) {
+                return new Promise((_, reject) => {
                     reject(new Error(`No participant found in the database with ID ${id}.`));
                 });
             } else {
-                return new Promise(function (resolve, _) {
+                return new Promise((resolve, _) => {
                     resolve({
                         length: results.length,
                         data: results
@@ -64,7 +65,7 @@ export default class Participant {
                 });
             }
         } catch (error) {
-            return new Promise(function (_, reject) {
+            return new Promise((_, reject) => {
                 reject(error);
             });
         }
@@ -75,14 +76,14 @@ export default class Participant {
         const sql = 'SELECT * FROM `participants`';
         try {
             const [results, ] = await pool.execute(sql);
-            return new Promise(function (resolve, _) {
+            return new Promise((resolve, _) => {
                 resolve({
                     length: results.length,
                     data: results
                 });
             });
         } catch (error) {
-            return new Promise(function (_, reject) {
+            return new Promise((_, reject) => {
                 reject(error);
             });
         }
@@ -95,7 +96,8 @@ export default class Participant {
             const participant = {
                 ...searchResult.data[0],
                 ...fields,
-                lastUpdateTime: DateTime.utc().toISO()
+                lastUpdateTime: DateTime.utc()
+                    .toFormat('yyyy-MM-dd HH:mm:ss')
             };
 
             const sql = 'UPDATE `participants` \
@@ -108,17 +110,17 @@ export default class Participant {
                     participant.email, participant.position, participant.description,
                     participant.notes, participant.lastUpdateTime, id]);
             if (result.affectedRows === 0) {
-                return new Promise(function (_, reject) {
+                return new Promise((_, reject) => {
                     reject(new Error(`Failed to update the participant with ID ${id}`));
                 });
             }
-            return new Promise(function (resolve, _) {
+            return new Promise((resolve, _) => {
                 resolve({
                     affectedRows: result.affectedRows
                 });
             });
         } catch (error) {
-            return new Promise(function (_, reject) {
+            return new Promise((_, reject) => {
                 reject(error);
             });
         }
@@ -129,20 +131,20 @@ export default class Participant {
         const sql = 'DELETE FROM `participants` \
                      WHERE `id` = ?';
         try {
-            const [result, ] = await pool.execute(sql, id);
+            const [result, ] = await pool.execute(sql, [id]);
             if (result.affectedRows === 0) {
-                return new Promise(function (_, reject) {
+                return new Promise((_, reject) => {
                     reject(new Error(`Failed to delete the participant with ID ${id}`));
                 });
             } else {
-                return new Promise(function (resolve, _) {
+                return new Promise((resolve, _) => {
                     resolve({
                         affectedRows: result.affectedRows
                     });
                 });
             }
         } catch (error) {
-            return new Promise(function (_, reject) {
+            return new Promise((_, reject) => {
                 reject(error);
             });
         }

@@ -11,14 +11,14 @@ export default class ProjectController {
             notes: req.body.notes || ''
         });
         project.create()
-            .then(function (result) {
+            .then((result) => {
                 res.send({
                     message: 'Created 1 project in the database ' +
                              `with ${result.affectedRows} rows affected`,
                     id: result.id
                 });
             })
-            .catch(function (error) {
+            .catch((error) => {
                 res.status(500).send({
                     message: error.message || 'Some unknown error occurred'
                 });
@@ -28,13 +28,13 @@ export default class ProjectController {
 
     static findById(req, res) {
         Project.findById(req.params.id)
-            .then(function (result) {
+            .then((result) => {
                 res.send({
                     message: `Found ${result.length} project in the database`,
                     data: result.data
                 });
             })
-            .catch(function (error) {
+            .catch((error) => {
                 res.status(500).send({
                     message: error.message || 'Some unknown error occurred'
                 });
@@ -44,13 +44,13 @@ export default class ProjectController {
 
     static findAll(req, res) {
         Project.findAll()
-            .then(function (result) {
+            .then((result) => {
                 res.send({
                     message: `Found ${result.length} project(s) in the database`,
                     data: result.data
                 });
             })
-            .catch(function (error) {
+            .catch((error) => {
                 res.status(500).send({
                     message: error.message || 'Some unknown error occurred'
                 });
@@ -77,13 +77,13 @@ export default class ProjectController {
         }
 
         Project.updateById(req.params.id, fields)
-            .then(function (result) {
+            .then((result) => {
                 res.send({
                     message: 'Updated 1 project in the database ' +
                              `with ${result.affectedRows} rows affected`
                 });
             })
-            .catch(function (error) {
+            .catch((error) => {
                 res.status(500).send({
                     message: error.message || 'Some unknown error occurred'
                 });
@@ -93,13 +93,13 @@ export default class ProjectController {
 
     static deleteById(req, res) {
         Project.deleteById(req.params.id)
-            .then(function (result) {
+            .then((result) => {
                 res.send({
                     message: 'Deleted 1 project from the database ' +
                              `with ${result.affectedRows} rows affected`
                 });
             })
-            .catch(function (error) {
+            .catch((error) => {
                 res.status(500).send({
                     message: error.message || 'Some unknown error occurred'
                 });

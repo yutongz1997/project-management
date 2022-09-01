@@ -7,7 +7,6 @@ import Navbar from 'react-bootstrap/Navbar';
 import Form from 'react-bootstrap/Form';
 
 import logo from '../logo.svg';
-import Button from 'react-bootstrap/Button';
 
 
 export default function NavigationBar() {
@@ -16,7 +15,7 @@ export default function NavigationBar() {
             <Container>
                 <LinkContainer to="/">
                     <Navbar.Brand>
-                        <img src={logo} width="48" height="48" alt="Project Management" />
+                        <img src={logo} width={48} height={48} alt={'Project Management'} />
                         Project Management
                     </Navbar.Brand>
                 </LinkContainer>
@@ -31,7 +30,7 @@ export default function NavigationBar() {
                         </LinkContainer>
                     </Nav>
                     <Form className="d-flex">
-                        <Button>Logout</Button>
+                        <Nav.Link>Logout</Nav.Link>
                     </Form>
                 </Navbar.Collapse>
             </Container>

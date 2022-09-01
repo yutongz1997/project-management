@@ -13,14 +13,14 @@ export default class ParticipantController {
             notes: req.body.notes || ''
         });
         participant.register()
-            .then(function (result) {
+            .then((result) => {
                 res.send({
                     message: 'Registered 1 participant in the database ' +
                              `with ${result.affectedRows} rows affected`,
                     data: result.id
                 });
             })
-            .catch(function (error) {
+            .catch((error) => {
                 res.status(500).send({
                    message: error.message || 'Some unknown error occurred'
                 });
@@ -30,13 +30,13 @@ export default class ParticipantController {
 
     static findById(req, res) {
         Participant.findById(req.params.id)
-            .then(function (result) {
+            .then((result) => {
                 res.send({
                     message: `Found ${result.length} participant in the database`,
                     data: result.data
                 });
             })
-            .catch(function (error) {
+            .catch((error) => {
                 res.status(500).send({
                     message: error.message || 'Some unknown error occurred'
                 });
@@ -46,13 +46,13 @@ export default class ParticipantController {
 
     static findAll(req, res) {
         Participant.findAll()
-            .then(function (result) {
+            .then((result) => {
                 res.send({
                    message: `Found ${result.length} participant(s) in the database`,
                    data: result.data
                 });
             })
-            .catch(function (error) {
+            .catch((error) => {
                 res.status(500).send({
                     message: error.message || 'Some unknown error occurred'
                 });
@@ -85,13 +85,13 @@ export default class ParticipantController {
         }
 
         Participant.updateById(req.params.id, fields)
-            .then(function (result) {
+            .then((result) => {
                 res.send({
                     message: 'Updated 1 participant in the database ' +
-                             `with ${result.affectedRows} rows affected`
+                             `with ${result.affectedRows} row affected`
                 });
             })
-            .catch(function (error) {
+            .catch((error) => {
                 res.status(500).send({
                     message: error.message || 'Some unknown error occurred'
                 });
@@ -101,13 +101,13 @@ export default class ParticipantController {
 
     static deleteById(req, res) {
         Participant.deleteById(req.params.id)
-            .then(function (result) {
+            .then((result) => {
                 res.send({
                     message: 'Deleted 1 participant from the database ' +
-                             `with ${result.affectedRows} rows affected`
+                             `with ${result.affectedRows} row affected`
                 });
             })
-            .catch(function (error) {
+            .catch((error) => {
                 res.status(500).send({
                     message: error.message || 'Some unknown error occurred'
                 });

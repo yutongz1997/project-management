@@ -6,7 +6,7 @@ import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Select from 'react-select';
-// TODO: From validation
+// TODO: Form validation
 // import { Formik } from 'formik';
 // import * as Yup from 'yup';
 
@@ -94,7 +94,7 @@ export default function ProjectEditDialog(props) {
         if (hasSubmitted) {
             window.location.reload();
         } else {
-            props.handleClose();
+            props.onClose();
         }
     };
 

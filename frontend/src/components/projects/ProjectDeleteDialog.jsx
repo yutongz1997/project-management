@@ -28,7 +28,7 @@ export default function ProjectDeleteDialog(props) {
         if (hasSubmitted) {
             window.location.reload();
         } else {
-            props.handleClose();
+            props.onClose();
         }
     }
 
@@ -57,7 +57,7 @@ export default function ProjectDeleteDialog(props) {
 
     return (
         <Modal show={props.show}
-               onHide={props.handleClose}
+               onHide={handleClose}
                centered>
             <Modal.Header closeButton>
                 <Modal.Title>Delete Project</Modal.Title>

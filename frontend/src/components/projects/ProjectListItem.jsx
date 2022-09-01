@@ -8,7 +8,8 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faPenToSquare,
+         faTrash } from '@fortawesome/free-solid-svg-icons';
 
 import ProjectHeaderToggle from './ProjectHeaderToggle';
 import ProjectEditDialog from './ProjectEditDialog';
@@ -79,12 +80,12 @@ export default function ProjectListItem(props) {
             </Card>
 
             <ProjectEditDialog show={editDialogShow}
-                               handleClose={handleEditDialogHide}
+                               onClose={handleEditDialogHide}
                                editing
                                fields={props.fields}
                                allParticipants={props.allParticipants} />
             <ProjectDeleteDialog show={deleteDialogShow}
-                                 handleClose={handleDeleteDialogHide}
+                                 onClose={handleDeleteDialogHide}
                                  fields={props.fields} />
         </>
     );

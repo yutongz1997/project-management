@@ -87,7 +87,7 @@ export default function ProjectListHeader(props) {
             </Card.Header>
 
             <ProjectEditDialog show={createDialogShow}
-                               handleClose={handleCreateDialogClose}
+                               onClose={handleCreateDialogClose}
                                allParticipants={props.allParticipants} />
         </>
     );

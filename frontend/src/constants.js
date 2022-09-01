@@ -1,3 +1,7 @@
+export const MAX_NAME_LENGTH = 255;
+export const MAX_EMAIL_LENGTH = 255;
+export const MAX_POSITION_LENGTH = 255;
+
 export const SORT_FIELDS = [
     { value: 'title', label: 'Title' },
     { value: 'year', label: 'Year' },

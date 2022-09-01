@@ -1,0 +1,15 @@
+.icon-edit-participant {
+    color: #555;
+}
+
+.icon-delete-participant {
+    color: #ff0000;
+}
+
+.icon-edit-participant:hover {
+    color: #282c34;
+}
+
+.icon-delete-participant:hover {
+    color: #dc3545;
+}
